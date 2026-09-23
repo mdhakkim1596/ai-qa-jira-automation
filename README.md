@@ -25,7 +25,8 @@ User → n8n Chat Trigger → AI Agent → Google Gemini
   - Workflow Automation
   - Prompt Engineering
 
-# Project Structure
+### Project Structure
+'''text
 ai-qa-jira-automation/
 ├── README.md
 ├── .gitignore
@@ -36,6 +37,7 @@ ai-qa-jira-automation/
 └── screenshots/
     ├── n8n-workflow.png
     └── jira-ticket.png
+'''
 
 # Jira Summary Format
 [Feature or Module] - [Concise Description of the Defect]
