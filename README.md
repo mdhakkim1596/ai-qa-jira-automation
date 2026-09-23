@@ -1,14 +1,17 @@
-# AI QA Bug-to-Jira Automation
+### AI QA Bug-to-Jira Automation
   - AI-powered n8n workflow that converts natural-language QA bug reports into structured Jira issues using Google Gemini.
 
-# Workflow
+### Workflow
+
+```text
 User → n8n Chat Trigger → AI Agent → Google Gemini
                               ↓
                          Jira Tool
                               ↓
                         Jira Issue
+```
 
-# Features
+### Features
   - AI-powered bug analysis
   - Automatic Jira Summary generation
   - Structured bug description
@@ -17,7 +20,7 @@ User → n8n Chat Trigger → AI Agent → Google Gemini
   - Automatic Jira issue creation
   - File upload support
 
-# Technologies
+### Technologies
   - n8n
   - Google Gemini
   - Jira Software
@@ -40,23 +43,8 @@ ai-qa-jira-automation/
     └── jira-ticket.png
 ```
 
-
-### Project Structure
-'''text
-ai-qa-jira-automation/
-├── README.md
-├── .gitignore
-├── workflows/
-│   └── qa-jira-automation-demo.json
-├── prompts/
-│   └── jira-agent-system-prompt.txt
-└── screenshots/
-    ├── n8n-workflow.png
-    └── jira-ticket.png
-'''
-
-# Jira Summary Format
+### Jira Summary Format
 [Feature or Module] - [Concise Description of the Defect]
 
-# Purpose
+### Purpose
   - Demonstrates how AI and workflow automation can reduce repetitive QA activities by converting bug reports into structured Jira issues.
