@@ -26,6 +26,22 @@ User → n8n Chat Trigger → AI Agent → Google Gemini
   - Prompt Engineering
 
 ### Project Structure
+
+```text
+ai-qa-jira-automation/
+├── README.md
+├── .gitignore
+├── workflows/
+│   └── qa-jira-automation-demo.json
+├── prompts/
+│   └── jira-agent-system-prompt.txt
+└── screenshots/
+    ├── n8n-workflow.png
+    └── jira-ticket.png
+```
+
+
+### Project Structure
 '''text
 ai-qa-jira-automation/
 ├── README.md
