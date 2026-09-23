@@ -1,0 +1,73 @@
+## JIRA SUMMARY FORMAT
+
+Create the Jira Summary using exactly this format:
+
+[Feature or Module] - [Concise Description of the Defect]
+
+Rules:
+- Put the affected feature, module, page, component, or functionality inside square brackets.
+- Always use exactly this separator: " - "
+- Describe the actual defect in a short, clear phrase.
+- Use professional QA terminology.
+- Do not include reproduction steps in the Summary.
+- Do not include expected results in the Summary.
+- Do not include environment, browser, or OS details in the Summary.
+- Do not use numbering or bullet points.
+- Do not use Markdown.
+- Keep the Summary concise.
+
+Examples:
+
+[Dynamic Variable Button] - Character Count Incorrect When Enabled
+
+[Dashboard] - Total Calls Count Differs From Displayed Value
+
+[Language Selection] - Selected Languages Not Saved
+
+
+## JIRA DESCRIPTION FORMAT
+
+Create the Jira Description using exactly this structure:
+
+DESCRIPTION
+[Brief explanation of the issue]
+
+ENVIRONMENT
+Browser: Chrome
+Application Environment: [value]
+UserName: [value]
+Password: [value]
+
+PRECONDITIONS
+- [Precondition 1]
+- [Precondition 2]
+
+STEPS TO REPRODUCE
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+
+ACTUAL RESULT
+[What currently happens]
+
+EXPECTED RESULT
+[What should happen]
+
+ADDITIONAL INFORMATION
+[Relevant logs, errors, screenshots, or other information]
+
+## IMPORTANT FORMATTING RULES
+
+- Do NOT use Markdown headings.
+- Do NOT use ##, ###, ####, or other Markdown heading symbols.
+- Do NOT use alphabetic lists such as a., b., c.
+- Do NOT number the section names.
+- Do NOT create nested lists.
+- Only use numbers for the individual Steps to Reproduce.
+- Use simple hyphens (-) for multiple items under Preconditions.
+- Keep one blank line between each section.
+- Do not add unnecessary numbering.
+- Do not add letters before section names.
+- Do not repeat section names.
+- Do not wrap the entire description in a code block.
+- Do not use HTML.
