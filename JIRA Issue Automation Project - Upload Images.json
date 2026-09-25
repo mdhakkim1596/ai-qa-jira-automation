@@ -1,0 +1,311 @@
+{
+  "name": "JIRA Issue Automation Project - Upload Images copy",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "allowFileUploads": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -640,
+        -176
+      ],
+      "id": "99a4cea0-6900-4328-aadc-494d21bed384",
+      "name": "When chat message received",
+      "webhookId": "676342f0-9b92-4b45-b5c3-fc4d009240a8"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "## JIRA SUMMARY FORMAT\n\nCreate the Jira Summary using exactly this format:\n\n[Feature or Module] - [Concise Description of the Defect]\n\nRules:\n- Put the affected feature, module, page, component, or functionality inside square brackets.\n- Always use exactly this separator: \" - \"\n- Describe the actual defect in a short, clear phrase.\n- Use professional QA terminology.\n- Do not include reproduction steps in the Summary.\n- Do not include expected results in the Summary.\n- Do not include environment, browser, or OS details in the Summary.\n- Do not use numbering or bullet points.\n- Do not use Markdown.\n- Keep the Summary concise.\n\nExamples:\n\n[Dynamic Variable Button] - Character Count Incorrect When Enabled\n\n[Dashboard] - Total Calls Count Differs From Displayed Value\n\n[Language Selection] - Selected Languages Not Saved\n\n\n## JIRA DESCRIPTION FORMAT\n\nCreate the Jira Description using exactly this structure:\n\nDESCRIPTION\n[Brief explanation of the issue]\n\nENVIRONMENT\nBrowser: [value]\nApplication Environment: [value]\nUser Account: [value]\n\nPRECONDITIONS\n- [Precondition 1]\n- [Precondition 2]\n\nSTEPS TO REPRODUCE\n1. [Step 1]\n2. [Step 2]\n3. [Step 3]\n\nACTUAL RESULT\n[What currently happens]\n\nEXPECTED RESULT\n[What should happen]\n\nADDITIONAL INFORMATION\n[Relevant logs, errors, screenshots, or other information]\n\n\n## IMPORTANT FORMATTING RULES\n\n- Do NOT use Markdown headings.\n- Do NOT use ##, ###, ####, or other Markdown heading symbols in the Jira Description.\n- Do NOT use alphabetic lists such as a., b., c.\n- Do NOT number the section names.\n- Do NOT create nested lists.\n- Use numbers only for the individual Steps to Reproduce.\n- Use simple hyphens (-) only for multiple items under Preconditions.\n- Keep one blank line between each section.\n- Do not add unnecessary numbering or bullets.\n- Do not add letters before section names.\n- Do not repeat section names.\n- Do not wrap the entire Description in a code block.\n- Do not use HTML.\n- Keep the Description clear, concise, and professional.\n- Preserve the actual meaning of the user's reported issue.\n- Do not invent technical details, errors, steps, expected results, or environment information that the user did not provide.\n- If required information is not provided, use only information that can reasonably be determined from the user's report.\n\n\n## SECURITY RULES\n\n- Never include passwords in the Jira Summary or Description.\n- Never include API keys in the Jira Summary or Description.\n- Never include access tokens in the Jira Summary or Description.\n- Never include authentication tokens or secrets in the Jira Summary or Description.\n- Never expose credentials in the Jira issue.\n- Use \"User Account\" instead of \"Password\" in the Environment section.\n- If the user provides a password or secret in the bug report, do not copy it into the Jira issue.\n\n\n## JIRA ISSUE AND ATTACHMENT WORKFLOW\n\nWhen processing a QA bug report:\n\n1. Analyze the user's QA bug report.\n2. Prepare the Jira Summary according to the JIRA SUMMARY FORMAT.\n3. Prepare the Jira Description according to the JIRA DESCRIPTION FORMAT.\n4. Create the Jira issue using the Create Issue tool.\n5. Wait for the Create Issue tool to complete successfully.\n6. Read the exact Jira Issue Key returned by the Create Issue tool.\n7. If the user provided one or more attachments, use the Add Attachment tool.\n8. Use the exact Jira Issue Key returned by the Create Issue tool when adding the attachment.\n9. Attach the user's uploaded file or files to the newly created Jira issue.\n10. Do not invent, modify, or guess the Jira Issue Key.\n11. Do not call the Add Attachment tool before the Create Issue tool has successfully completed.\n12. If no attachment was provided, do not call the Add Attachment tool.\n13. If multiple attachments are provided, attach each relevant file to the same newly created Jira issue.\n14. After all requested Jira operations are successfully completed, tell the user that the Jira issue was created successfully and provide the Jira Issue Key.\n15. If the Jira issue is created successfully but the attachment fails, clearly state that the Jira issue was created but the attachment could not be added.\n16. Do not claim that an attachment was successfully added unless the Add Attachment tool confirms successful completion."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -416,
+        -176
+      ],
+      "id": "f623e88f-6cef-4476-86f2-e1d1aa4432ce",
+      "name": "AI Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -320,
+        32
+      ],
+      "id": "f566119f-c6d9-480c-a627-4fc77bfa7fdf",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -480,
+        32
+      ],
+      "id": "beb18152-fedb-4d75-9b1b-35c324c6eb6c",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "JAG8flfs159qbHg3",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Create a Jira issue in the QA Testing project.\n\nUse the Summary field for the concise bug title.\n\nUse the Description field for the complete QA bug report, including:\nDESCRIPTION\nENVIRONMENT\nPRECONDITIONS\nSTEPS TO REPRODUCE\nACTUAL RESULT\nEXPECTED RESULT\nADDITIONAL INFORMATION.\n\nThe Description must use plain text formatting.\nDo not use Markdown headings or nested numbered/lettered lists.\n\nAfter creating the issue, return the exact Jira Issue Key to the AI Agent.\nDo not modify or invent the Issue Key.",
+        "project": {
+          "__rl": true,
+          "value": "10001",
+          "mode": "list",
+          "cachedResultName": "QA Testing"
+        },
+        "issueType": {
+          "__rl": true,
+          "value": "10008",
+          "mode": "list",
+          "cachedResultName": "Task"
+        },
+        "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}",
+        "additionalFields": {
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.jiraTool",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        32
+      ],
+      "id": "367fa48e-b101-4e76-86be-48f6c39c067e",
+      "name": "Create an issue in Jira Software",
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "oeriOQw2SzMq4Z7D",
+          "name": "Jira SW Cloud account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const agentText = $json.output || '';\n\nconst match = agentText.match(/\\b[A-Z][A-Z0-9]*-\\d+\\b/);\n\nif (!match) {\n  throw new Error('Could not find Jira Issue Key in AI Agent output.');\n}\n\nconst issueKey = match[0];\n\nconst trigger = $('When chat message received').first();\n\nreturn [\n  {\n    json: {\n      issueKey: issueKey\n    },\n    binary: trigger.binary\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -96,
+        -176
+      ],
+      "id": "db0a0b2c-3421-4aa3-9f78-cb1b8f00c683",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "resource": "issueAttachment",
+        "issueKey": "={{ $json.issueKey }}",
+        "binaryPropertyName": "data0"
+      },
+      "type": "n8n-nodes-base.jira",
+      "typeVersion": 1,
+      "position": [
+        352,
+        -288
+      ],
+      "id": "411c735e-303a-44c0-a220-3a03ecee830e",
+      "name": "Add an attachment to an issue",
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "oeriOQw2SzMq4Z7D",
+          "name": "Jira SW Cloud account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "77211700-bb3c-4499-9dc9-f63123e36e5a",
+              "leftValue": "={{ $binary && $binary.data0 ? true : false }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        112,
+        -176
+      ],
+      "id": "2cef146e-a6ad-4698-89ba-be34a37da1d7",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b8627b01-32d0-4efc-9bd0-880e4b66fd0e",
+              "name": "output",
+              "value": "=Jira issue {{ $('Code in JavaScript').first().json.issueKey }} has been created successfully{{ $('When chat message received').first().binary ? ' with screenshot attached.' : '.' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        608,
+        -160
+      ],
+      "id": "e775284a-0a05-4a73-8e92-8db6345837d0",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an issue in Jira Software": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Add an attachment to an issue",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add an attachment to an issue": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "f21d6a92-d69b-453f-ac33-b5e9badbd0cc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2d1c22b4c21123a897688cdf2d69db3431945a1c1e735029ee75896fdf3ba193"
+  },
+  "nodeGroups": [],
+  "id": "9ZGec1uep58a9zKd",
+  "tags": []
+}
